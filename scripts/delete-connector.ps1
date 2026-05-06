@@ -1,0 +1,1 @@
+curl -Method DELETE http://localhost:8083/connectors/postgres-connector
