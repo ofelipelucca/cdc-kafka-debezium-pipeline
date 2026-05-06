@@ -28,7 +28,7 @@ services:
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
 
   kafka-connect:
-    image: debezium/connect:2.5
+    image: debezium/connect:2.5.4.Final
     container_name: kafka-connect
     depends_on:
       - kafka
