@@ -68,7 +68,7 @@ services:
                -c max_replication_slots=10
 
   kafdrop:
-    image: obsidiandynamics/kafdrop:latest
+    image: obsidiandynamics/kafdrop:4.0.2
     container_name: kafdrop
     depends_on:
       - kafka
