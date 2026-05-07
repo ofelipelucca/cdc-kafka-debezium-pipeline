@@ -42,24 +42,24 @@ Debezium + Kafka Connect
 
 # Fluxo completo
 
-```text
-FastAPI
-  ↓
-PostgreSQL
-  ↓
-WAL
-  ↓
-Logical Replication
-  ↓
-Debezium
-  ↓
-Kafka Connect
-  ↓
-Kafka Topic
-  ↓
-Consumer
-  ↓
-MongoDB
+```mermaid
+flowchart TD
+
+A[FastAPI] --> B[(PostgreSQL)]
+
+B --> C[WAL<br/>Write-Ahead Log]
+
+C --> D[Logical Replication Slot]
+
+D --> E[Debezium<br/>CDC Engine]
+
+E --> F[Kafka Connect]
+
+F --> G[(Kafka Topic)]
+
+G --> H[Consumer<br/>Processing Layer]
+
+H --> I[(MongoDB<br/>Read Model)]
 ```
 
 ---
@@ -304,14 +304,12 @@ O sistema opera com consistência eventual.
 
 Fluxo:
 
-```text
-PostgreSQL
-↓
-Kafka
-↓
-Consumer
-↓
-MongoDB
+```mermaid
+flowchart TD
+
+A[(PostgreSQL)] --> B[(Kafka)]
+B --> C[Consumer]
+C --> D[(MongoDB)]
 ```
 
 Pode existir pequeno atraso entre:

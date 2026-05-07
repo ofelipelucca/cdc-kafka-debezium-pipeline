@@ -383,16 +383,13 @@ curl -X DELETE http://localhost:8083/connectors/postgres-connector
 
 ## Validar fluxo
 
-```text
-POST API
-↓
-PostgreSQL
-↓
-Debezium
-↓
-Kafka
-↓
-Consumer
+```mermaid id="c8m2vd"
+flowchart TD
+
+A[POST API] --> B[(PostgreSQL)]
+B --> C[Debezium]
+C --> D[(Kafka)]
+D --> E[Consumer]
 ```
 
 ---

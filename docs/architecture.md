@@ -20,24 +20,24 @@ O principal objetivo é demonstrar uma arquitetura orientada a eventos utilizand
 
 # Visão geral da arquitetura
 
-```text
-Client
-  ↓
-FastAPI
-  ↓
-PostgreSQL
-  ↓
-WAL (Logical Replication)
-  ↓
-Debezium
-  ↓
-Kafka
-  ↓
-Consumers
-  ↓
-MongoDB
-  ↓
-Feed API
+```mermaid
+flowchart TD
+
+A[Client] --> B[FastAPI]
+
+B --> C[(PostgreSQL<br/>Write Model)]
+
+C --> D[WAL<br/>Logical Replication]
+
+D --> E[Debezium<br/>CDC Engine]
+
+E --> F[(Kafka<br/>Event Streaming)]
+
+F --> G[Consumers<br/>Processing Layer]
+
+G --> H[(MongoDB<br/>Read Model)]
+
+H --> I[Feed API<br/>GET /feed]
 ```
 
 ---

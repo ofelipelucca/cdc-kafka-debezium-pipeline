@@ -19,16 +19,13 @@ Os consumers são responsáveis por:
 
 # Papel dos consumers na arquitetura
 
-```text
-PostgreSQL
-  ↓
-Debezium
-  ↓
-Kafka
-  ↓
-Consumers
-  ↓
-MongoDB
+```mermaid id="k2x9ld"
+flowchart TD
+
+A[(PostgreSQL)] --> B[Debezium]
+B --> C[(Kafka)]
+C --> D[Consumers]
+D --> E[(MongoDB)]
 ```
 
 Os consumers representam a camada de processamento assíncrono da aplicação.
@@ -65,12 +62,11 @@ Responsável por sincronizar usuários no MongoDB.
 
 # Fluxo
 
-```text
-Kafka Topic
-↓
-users_consumer
-↓
-MongoDB users collection
+```mermaid id="v3m8qp"
+flowchart TD
+
+A[(Kafka Topic)] --> B[users_consumer]
+B --> C[(MongoDB<br/>users collection)]
 ```
 
 ---
@@ -123,12 +119,11 @@ Responsável por materializar o feed da aplicação.
 
 # Fluxo
 
-```text
-Kafka Topic
-↓
-posts_consumer
-↓
-MongoDB feed_posts
+```mermaid id="v3m8qp"
+flowchart TD
+
+A[(Kafka Topic)] --> B[posts_consumer]
+B --> C[(MongoDB<br/>feed_posts collection)]
 ```
 
 ---

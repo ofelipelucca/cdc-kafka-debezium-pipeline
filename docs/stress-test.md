@@ -30,20 +30,15 @@ via API REST.
 
 # Fluxo exercitado
 
-```text
-Script
-  ↓
-FastAPI
-  ↓
-PostgreSQL
-  ↓
-Debezium
-  ↓
-Kafka
-  ↓
-Consumers
-  ↓
-MongoDB
+```mermaid id="s7v3kd"
+flowchart TD
+
+A[Script] --> B[FastAPI]
+B --> C[(PostgreSQL)]
+C --> D[Debezium]
+D --> E[(Kafka)]
+E --> F[Consumers]
+F --> G[(MongoDB)]
 ```
 
 ---
@@ -152,12 +147,11 @@ POST /posts
 
 Cada insert dispara:
 
-```text
-PostgreSQL
-↓
-Debezium
-↓
-Kafka
+```mermaid id="d9x2lm"
+flowchart TD
+
+A[(PostgreSQL)] --> B[Debezium]
+B --> C[(Kafka)]
 ```
 
 ---
@@ -265,10 +259,10 @@ O objetivo principal é demonstrar:
 
 Durante alto throughput, pode existir atraso entre:
 
-```text
-INSERT
-↓
-disponibilidade no feed
+```mermaid id="h7q3np"
+flowchart LR
+
+A[INSERT] --> B[Disponibilidade no feed]
 ```
 
 Esse comportamento é esperado.

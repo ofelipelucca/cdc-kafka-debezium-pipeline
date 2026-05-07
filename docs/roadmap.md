@@ -220,16 +220,13 @@ Migrar consumers para:
 
 # Evolução da arquitetura
 
-```text
-MVP
-↓
-CDC + Feed
-↓
-Analytics + Cache
-↓
-Search + Notifications
-↓
-Production-ready system
+```mermaid id="m4c8pz"
+flowchart TD
+
+A[MVP] --> B[CDC + Feed]
+B --> C[Analytics + Cache]
+C --> D[Search + Notifications]
+D --> E[Production-ready system]
 ```
 
 ---

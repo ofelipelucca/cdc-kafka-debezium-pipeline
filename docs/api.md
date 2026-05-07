@@ -209,14 +209,14 @@ Retorna os últimos N posts materializados no MongoDB.
 
 A API segue padrão simples:
 
-```text
-Router
-↓
-Service
-↓
-Repository (SQLAlchemy)
-↓
-PostgreSQL
+```mermaid
+flowchart TD
+
+A[Router - FastAPI Endpoint] --> B[Service Layer<br/>Business Logic]
+
+B --> C[Repository Layer<br/>SQLAlchemy ORM]
+
+C --> D[(PostgreSQL<br/>Write Model)]
 ```
 
 ---
@@ -227,8 +227,12 @@ A API NÃO envia eventos diretamente ao Kafka.
 
 Fluxo correto:
 
-```text
-API → PostgreSQL → Debezium → Kafka
+```mermaid
+flowchart LR
+
+A[API - FastAPI] --> B[(PostgreSQL<br/>Write Model)]
+B --> C[Debezium<br/>CDC Engine]
+C --> D[(Kafka<br/>Event Streaming)]
 ```
 
 ---

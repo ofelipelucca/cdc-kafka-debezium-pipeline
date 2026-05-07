@@ -57,16 +57,13 @@ CQRS (Command Query Responsibility Segregation)
 
 # Fluxo de materialização
 
-```text
-PostgreSQL
-  ↓
-Debezium
-  ↓
-Kafka
-  ↓
-posts_consumer
-  ↓
-MongoDB
+```mermaid id="r7t2mn"
+flowchart TD
+
+A[(PostgreSQL)] --> B[Debezium]
+B --> C[(Kafka)]
+C --> D[posts_consumer]
+D --> E[(MongoDB)]
 ```
 
 ---
@@ -124,12 +121,11 @@ Evitar joins em tempo de leitura.
 
 A API precisaria:
 
-```text
-buscar post
-↓
-buscar usuário
-↓
-montar resposta
+```mermaid id="f1q9xa"
+flowchart TD
+
+A[Buscar post] --> B[Buscar usuário]
+B --> C[Montar resposta]
 ```
 
 ---
@@ -225,14 +221,12 @@ O MongoDB não é atualizado instantaneamente.
 
 Fluxo:
 
-```text
-PostgreSQL
-↓
-Kafka
-↓
-Consumer
-↓
-MongoDB
+```mermaid id="l9k2vd"
+flowchart TD
+
+A[(PostgreSQL)] --> B[(Kafka)]
+B --> C[Consumer]
+C --> D[(MongoDB)]
 ```
 
 Pode existir pequeno atraso entre:
