@@ -15,20 +15,27 @@ Este projeto é uma simulação de uma **rede social 100% baseada em API**, cons
 
 A ideia central do projeto é demonstrar um fluxo real de **Change Data Capture (CDC)** aplicado a um cenário de rede social.
 
-```text
-FastAPI
-  ↓
-PostgreSQL (Write Model)
-  ↓
-Debezium (CDC)
-  ↓
-Kafka (Event Streaming)
-  ↓
-Consumers (Processing)
-  ↓
-MongoDB (Read Model)
-  ↓
-Feed API
+```mermaid
+flowchart TD
+
+A[FastAPI - REST API] --> B[(PostgreSQL<br/>Write Model)]
+
+B --> C[WAL / Logical Replication Slot]
+
+C --> D[Debezium Connector<br/>Kafka Connect]
+
+D --> E[(Kafka Topic<br/>dbserver1.api_social_media.*)]
+
+E --> F[Kafka Consumer - Users Service]
+E --> G[Kafka Consumer - Posts Service]
+
+F --> H[(MongoDB<br/>users collection)]
+G --> I[(MongoDB<br/>feed_posts collection)]
+
+H --> J[Feed Aggregation Layer]
+I --> J
+
+J --> K[FastAPI - Feed Endpoint<br/>GET /feed]
 ```
 
 <br>
