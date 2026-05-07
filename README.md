@@ -9,6 +9,10 @@ Este projeto é uma simulação de uma **rede social 100% baseada em API**, cons
 - MongoDB (read model)
 - FastAPI (API REST)
 
+<p align="center">
+    <img src="./static/cdc-flow.gif">
+</p>
+
 <br>
 
 # 🧠 Visão geral
