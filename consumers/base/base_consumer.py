@@ -49,10 +49,10 @@ class BaseConsumer:
                     doc = self.transform(after)
                     self.collection.update_one({"_id": doc["_id"]}, {"$set": doc}, upsert=True)
                     action = "created" if op == "c" else "updated"
-                    logging.info(f"Document {action}: {doc['_id']}")
+                    logging.info(f"Document {action}: {doc['_id']} - {doc['guid']}")
                 elif op == "d":
                     self.collection.delete_one({"_id": before["id"]})
-                    logging.info(f"Document deleted: {before['id']}")
+                    logging.info(f"Document deleted: {before['id']} - {before['guid']}")
 
             except Exception as e:
                 logging.exception(f"Error processing event: {e}")

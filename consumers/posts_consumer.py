@@ -21,9 +21,11 @@ class PostsConsumer(BaseConsumer):
 
         return {
             "_id": after["id"],
+            "guid": after["guid"],
             "content": after["content"],
             "user": {
                 "id": user["_id"] if user else None,
+                "guid": user["guid"] if user else None,
                 "nome": user["nome"] if user else "Unknown",
             }
         }
