@@ -125,7 +125,6 @@ Ordem recomendada:
 03_posts.sql
 04_constraints.sql
 ```
-
 ---
 
 # Configurar Debezium Connector
@@ -198,10 +197,18 @@ python consumers/posts_consumer.py
 
 # Gerar dados fake
 
+
+Instalar dependências:
+
+```bash
+cd scripts/tests
+pip install -r requirements.txt
+```
+
 Executar:
 
 ```bash
-python scripts/generate_fake_data.py
+python generate_fake_data.py
 ```
 
 O script irá:
