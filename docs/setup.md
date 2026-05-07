@@ -51,6 +51,7 @@ cd cdc-kafka-debezium-pipeline
 Na raiz do projeto:
 
 ```bash
+cd docker
 docker compose up -d
 ```
 
