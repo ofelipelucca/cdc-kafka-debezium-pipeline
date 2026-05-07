@@ -2,7 +2,7 @@ CREATE TABLE api_social_media.posts (
     id bigserial NOT NULL,
     content text NOT NULL,
     id_user int8 NOT NULL,
-    guid varchar(36) NOT NULL,
+    guid UUID NOT NULL,
     created_at TIMESTAMP DEFAULT NOW(),
 
     CONSTRAINT posts_pk PRIMARY KEY (id),
