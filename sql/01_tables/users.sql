@@ -2,7 +2,7 @@ CREATE TABLE api_social_media.users (
     id bigserial NOT NULL,
     nome varchar(800) NOT NULL,
     email varchar(254) NOT NULL,
-    guid varchar(36) NOT NULL,
+    guid UUID NOT NULL,
 
     CONSTRAINT users_pk PRIMARY KEY (id),
     CONSTRAINT users_unique UNIQUE (email),
