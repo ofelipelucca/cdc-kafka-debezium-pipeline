@@ -1,6 +1,20 @@
-# 🚀 CDC Kafka + Debezium | Social Media API (Event-Driven Architecture)
+<div align="center">
+    <h1>CDC Kafka + Debezium | Social Media API (Event-Driven Architecture)</h1>
+      <img src="https://img.shields.io/badge/FastAPI-gray?logo=fastapi" />
+      <img src="https://img.shields.io/badge/SQLAlchemy-gray?logo=sqlalchemy" />
+      <img src="https://img.shields.io/badge/PostgreSQL-gray?logo=postgresql" />
+      <img src="https://img.shields.io/badge/Apache%20Kafka-gray?logo=apache-kafka" />
+      <img src="https://img.shields.io/badge/MongoDB-gray?logo=mongodb" />
+      <img src="https://img.shields.io/badge/Python-gray?logo=python" />
+      <img src="https://img.shields.io/badge/Docker-gray?logo=docker" />
+</div>
+<div align="center">
+    <img src="https://img.shields.io/github/last-commit/ofelipelucca/cdc-kafka-debezium-pipeline" />
+</div>
 
-Este projeto é uma simulação de uma **rede social 100% baseada em API**, construída com foco em **arquitetura orientada a eventos**, utilizando:
+<br>
+
+Este projeto é uma simulação de uma <strong>rede social 100% baseada em API</strong>, construída com foco em <strong>arquitetura orientada a eventos</strong>, utilizando:
 
 - PostgreSQL (write model)
 - Debezium (CDC)
