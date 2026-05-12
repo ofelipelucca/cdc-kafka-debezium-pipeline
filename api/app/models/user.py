@@ -10,4 +10,4 @@ class User(Base):
     id = Column(BigInteger, primary_key=True)
     nome = Column(String(800), nullable=False)
     email = Column(String(254), nullable=False)
-    guid = Column(String(36), nullable=False)
+    guid = Column(String(36), unique=True, nullable=False)
