@@ -1,9 +1,8 @@
 import logging
-import Optional
-from sqlalchemy.orm import Session
-from sqlalchemy.exc import NoResultFound
+from typing import Optional
+from sqlalchemy.orm import Session, joinedload
 
-from api.app.schemas.post import PostCreate
+from app.schemas.post import PostCreate
 from app.models.post import Post
 
 
@@ -26,11 +25,8 @@ class PostRepository:
 
     def get_post_by_guid(self, guid: str) -> Optional[Post]:
         try:
-            post = self.db.query(Post).filter(Post.guid == guid).first()
+            post = self.db.query(Post).options(joinedload(Post.user)).filter(Post.guid == guid).one_or_none()
             return post
-        except NoResultFound:
-            logging.warning(f"Post with guid {guid} not found")
-            return None
         except Exception as e:
             logging.exception(f"Error retrieving post by guid: {e}")
             raise

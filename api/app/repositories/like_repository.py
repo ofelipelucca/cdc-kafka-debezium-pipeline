@@ -2,8 +2,8 @@ import logging
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
 
-from api.app.schemas.like import LikeCreate
-from api.app.models.like import Like
+from app.schemas.like import LikeCreate
+from app.models.like import Like
 
 
 class LikeRepository:

@@ -1,51 +1,76 @@
-from fastapi import APIRouter, Depends, HTTPException
-
-from sqlalchemy.orm import Session
+from fastapi import APIRouter, Depends, Response, status, HTTPException
+from sqlalchemy.exc import IntegrityError
 
 from app.config import API_VERSION
-from app.schemas.post import PostCreate
+from app.repositories.user_repository import UserRepository
+from app.repositories.post_repository import PostRepository
+from app.repositories.like_repository import LikeRepository
+from app.schemas.post import PostCreate, PostResponse
+from app.schemas.like import LikeCreate
 from app.db.postgres import get_db
-from app.models.post import Post
-from app.models.user import User
 
-import uuid
 
 router = APIRouter(prefix=f"/api/{API_VERSION}")
 
 
 @router.post("/posts")
-def create_post(payload: PostCreate, db: Session = Depends(get_db)):
-    user = db.query(User).filter(User.guid == payload.user_guid).first()
+def create_post(payload: PostCreate, db=Depends(get_db)):
+    user_repository = UserRepository(db=db)
+
+    user = user_repository.get_user_by_guid(payload.user_guid)
 
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
 
-    post = Post(content=payload.content, id_user=user.id, guid=str(uuid.uuid4()))
+    post_repository = PostRepository(db=Depends(get_db))
 
-    db.add(post)
-    db.commit()
-    db.refresh(post)
+    try:
+        post = post_repository.create_post(post_create=payload)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail="An error occurred while creating the post")
 
-    return {"guid": post.guid}
+    return PostResponse(guid=post.guid, content=post.content, user_guid=user.guid, created_at=post.created_at)
 
 
 @router.get("/posts/{guid}")
-def get_post(guid: str, db: Session = Depends(get_db)):
-    result = (
-        db.query(Post, User)
-        .join(User, User.id == Post.id_user)
-        .filter(Post.guid == guid)
-        .first()
-    )
+def get_post(guid: str, db=Depends(get_db)):
+    post_repository = PostRepository(db=db)
 
-    if not result:
+    try:
+        post = post_repository.get_post_by_guid(guid)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail="An error occurred while fetching the post")
+
+    if not post:
         raise HTTPException(status_code=404, detail="Post not found")
 
-    post, user = result
+    return PostResponse(guid=post.guid, content=post.content, user_guid=post.user.user_guid, created_at=post.created_at)
 
-    return {
-        "guid": post.guid,
-        "content": post.content,
-        "user_guid": user.guid,
-        "created_at": post.created_at
-    }
+
+
+@router.post("/posts/{guid}/like")
+def like_post(guid: str, payload: LikeCreate, db=Depends(get_db)):
+    user_repository = UserRepository(db=db)
+
+    user = user_repository.get_user_by_guid(payload.user_guid)
+
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    post_repository = PostRepository(db=db)
+
+    post = post_repository.get_post_by_guid(guid)
+
+    if not post:
+        raise HTTPException(status_code=404, detail="Post not found")
+
+    like_repository = LikeRepository(db=db)
+
+    try:
+        like_repository.create_like(like_create=payload)
+    except IntegrityError:
+        raise HTTPException(status_code=400, detail="User has already liked this post")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail="An error occurred while liking the post")
+
+    return Response(status_code=status.HTTP_201_CREATED)
