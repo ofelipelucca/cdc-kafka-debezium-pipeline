@@ -6,8 +6,8 @@ from app.schemas.user import UserCreate, UserDTO
 
 
 class UserService:
-    def __init__(self, user_repository: UserRepository):
-        self.user_repository = user_repository
+    def __init__(self, db):
+        self.user_repository = UserRepository(db=db)
 
     def create_user(self, user_create: UserCreate) -> UserDTO:
         user_dto = UserDTO(guid=str(uuid.uuid4()), nome=user_create.nome, email=user_create.email)
