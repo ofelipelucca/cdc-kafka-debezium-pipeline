@@ -1,3 +1,4 @@
+import uuid
 from fastapi import APIRouter, Depends, Response, status, HTTPException
 from sqlalchemy.exc import IntegrityError
 
@@ -22,10 +23,10 @@ def create_post(payload: PostCreate, db=Depends(get_db)):
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
 
-    post_repository = PostRepository(db=Depends(get_db))
+    post_repository = PostRepository(db=db)
 
     try:
-        post = post_repository.create_post(post_create=payload)
+        post = post_repository.create_post(post_create=payload | {"guid": str(uuid.uuid4())})
     except Exception as e:
         raise HTTPException(status_code=500, detail="An error occurred while creating the post")
 
@@ -67,7 +68,7 @@ def like_post(guid: str, payload: LikeCreate, db=Depends(get_db)):
     like_repository = LikeRepository(db=db)
 
     try:
-        like_repository.create_like(like_create=payload)
+        like_repository.create_like(like_create=payload | {"guid": str(uuid.uuid4()), "id_post": post.id, "id_user": user.id})
     except IntegrityError:
         raise HTTPException(status_code=400, detail="User has already liked this post")
     except Exception as e:
