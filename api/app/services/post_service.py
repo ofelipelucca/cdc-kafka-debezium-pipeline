@@ -7,9 +7,9 @@ from app.schemas.post import PostCreate, PostDTO
 
 
 class PostService:
-    def __init__(self, post_repository: PostRepository, user_repository: UserRepository):
-        self.post_repository = post_repository
-        self.user_repository = user_repository
+    def __init__(self, db):
+        self.post_repository = PostRepository(db=db)
+        self.user_repository = UserRepository(db=db)
 
     def create_post(self, post_create: PostCreate) -> PostDTO:
         user = self.user_repository.get_user_by_guid(post_create.user_guid)

@@ -7,10 +7,10 @@ from app.schemas.like import LikeCreate, LikeDTO
 
 
 class LikeService:
-    def __init__(self, like_repository: LikeRepository, user_repository: UserRepository, post_repository: PostRepository):
-        self.like_repository = like_repository
-        self.user_repository = user_repository
-        self.post_repository = post_repository
+    def __init__(self, db):
+        self.like_repository = LikeRepository(db=db)
+        self.user_repository = UserRepository(db=db)
+        self.post_repository = PostRepository(db=db)
 
     def create_like(self, like_create: LikeCreate) -> LikeDTO:
         user = self.user_repository.get_user_by_guid(like_create.user_guid)
