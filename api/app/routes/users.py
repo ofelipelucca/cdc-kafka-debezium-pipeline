@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 from app.config import API_VERSION
 from app.db.postgres import get_db
 from app.models.user import User
-from app.schemas.user import UserCreate
+from app.schemas.user import UserCreate, UserResponse
 
 import uuid
 
@@ -19,7 +19,7 @@ def create_user(payload: UserCreate, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(user)
 
-    return {"guid": user.guid}
+    return UserResponse(guid=user.guid, nome=user.nome, email=user.email)
 
 
 @router.get("/users/{guid}")
@@ -30,4 +30,4 @@ def get_user(guid: str, db: Session = Depends(get_db)):
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
 
-    return {"guid": user.guid, "nome": user.nome, "email": user.email}
+    return UserResponse(guid=user.guid, nome=user.nome, email=user.email)
