@@ -3,8 +3,8 @@ from fastapi import APIRouter
 from app.config import API_VERSION
 from app.db.mongo import mongo_db
 
-router = APIRouter(prefix=f"/api/{API_VERSION}")
 
+router = APIRouter(prefix=f"/api/{API_VERSION}")
 
 @router.get("/feed")
 def get_feed(n: int = 10):

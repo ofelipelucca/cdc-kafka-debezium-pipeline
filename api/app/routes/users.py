@@ -9,7 +9,6 @@ from app.db.postgres import get_db
 
 router = APIRouter(prefix=f"/api/{API_VERSION}")
 
-
 @router.post("/users")
 def create_user(payload: UserCreate, db=Depends(get_db)):
     user_service = UserService(user_repository=UserRepository(db=db))
