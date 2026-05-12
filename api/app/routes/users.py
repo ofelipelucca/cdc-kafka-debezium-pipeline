@@ -21,7 +21,6 @@ def create_user(payload: UserCreate, db=Depends(get_db)):
 
     return UserResponse(guid=user.guid, nome=user.nome, email=user.email)
 
-
 @router.get("/users/{guid}")
 def get_user(guid: str, db=Depends(get_db)):
     user_service = UserService(user_repository=UserRepository(db=db))

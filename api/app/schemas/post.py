@@ -5,6 +5,7 @@ from datetime import datetime
 class PostDTO(BaseModel):
     guid: str
     content: str
+    id_user: int
     user_guid: str
     created_at: datetime
 

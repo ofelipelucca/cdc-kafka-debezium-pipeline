@@ -2,7 +2,7 @@ import logging
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
 
-from app.schemas.like import LikeCreate
+from app.schemas.like import LikeDTO
 from app.models.like import Like
 
 
@@ -10,8 +10,8 @@ class LikeRepository:
     def __init__(self, db: Session):
         self.db = db
 
-    def create_like(self, like_create: LikeCreate) -> Like:
-        like = Like(id_post=like_create.id_post, id_user=like_create.id_user, guid=like_create.guid)
+    def create_like(self, new_like: LikeDTO) -> Like:
+        like = Like(id_post=new_like.post_guid, id_user=new_like.user_guid, guid=new_like.guid)
 
         try:
             self.db.add(like)
