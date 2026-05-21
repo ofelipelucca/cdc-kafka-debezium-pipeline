@@ -23,12 +23,6 @@ class LikeService:
         if not post:
             raise ValueError("Post not found")
 
-        like_dto = LikeDTO(
-            guid=str(uuid.uuid4()),
-            id_user=user.id,
-            id_post=post.id,
-            user_guid=like_create.user_guid,
-            post_guid=like_create.post_guid
-        )
+        like_dto = LikeDTO(guid=str(uuid.uuid4()),id_user=user.id, id_post=post.id, user_guid=like_create.user_guid, post_guid=like_create.post_guid)
 
         return self.like_repository.create_like(new_like=like_dto)
