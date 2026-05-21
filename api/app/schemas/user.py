@@ -1,14 +1,15 @@
-from pydantic import BaseModel
+from uuid import UUID
+from pydantic import BaseModel, EmailStr
 
 
 class UserDTO(BaseModel):
-    guid: str
+    guid: UUID
     nome: str
-    email: str
+    email: EmailStr
 
 class UserCreate(BaseModel):
     nome: str
-    email: str
+    email: EmailStr
 
 class UserResponse(UserDTO):
     pass
